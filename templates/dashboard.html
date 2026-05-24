@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2 class="fw-bold">
+        Dashboard
+    </h2>
+
+    <a href="/add" class="btn btn-primary">
+
+        <i class="bi bi-plus-circle"></i>
+
+        Add Student
+
+    </a>
+
+</div>
+
+<form method="GET">
+
+<div class="input-group mb-4 search-box">
+
+    <input
+        type="text"
+        name="search"
+        class="form-control"
+        placeholder="Search Student"
+    >
+
+    <button class="btn btn-outline-light">
+
+        <i class="bi bi-search"></i>
+
+    </button>
+
+</div>
+
+</form>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover align-middle shadow">
+
+<tr>
+
+    <th>Photo</th>
+    <th>Name</th>
+    <th>Course</th>
+    <th>Email</th>
+    <th>Mobile</th>
+    <th>Actions</th>
+
+</tr>
+
+{% if students %}
+
+{% for student in students %}
+
+<tr>
+
+<td>
+
+<a
+href="{{ url_for('static', filename='uploads/' + student.photo) }}"
+target="_blank"
+>
+
+<img
+src="{{ url_for('static', filename='uploads/' + student.photo) }}"
+width="70"
+height="70"
+style="cursor:pointer;"
+>
+
+</a>
+
+</td>
+
+<td>{{student.name}}</td>
+<td>{{student.course}}</td>
+<td>
+
+<a
+href="mailto:{{student.email}}"
+style="color: #4da6ff; text-decoration: none;"
+>
+
+{{student.email}}
+
+</a>
+
+</td>
+
+<td>
+
+<a
+href="tel:{{student.mobile}}"
+style="color: #90ee90; text-decoration: none;"
+>
+
+{{student.mobile}}
+
+</a>
+
+</td>
+
+<td>
+
+<a
+href="/edit/{{student.id}}"
+class="btn btn-warning btn-sm"
+>
+
+<i class="bi bi-pencil-square"></i>
+
+Edit
+
+</a>
+
+<a
+href="/delete/{{student.id}}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Are you sure you want to delete this student?')"
+>
+
+<i class="bi bi-trash"></i>
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+{% else %}
+
+<tr>
+
+<td colspan="6" class="text-center">
+
+No Students Found
+
+</td>
+
+</tr>
+
+{% endif %}
+
+</table>
+
+</div>
+
+{% endblock %}

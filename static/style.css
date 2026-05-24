@@ -1,0 +1,90 @@
+body{
+    background-color: #121212;
+    color: white;
+}
+
+.navbar{
+    background-color: #1f1f1f;
+}
+
+.card{
+    background-color: #1e1e1e;
+    color: white;
+    border: 1px solid #333;
+}
+
+.table{
+    color: white;
+}
+
+.table td{
+    background-color: #1e1e1e !important;
+    color: white !important;
+}
+
+.table th{
+    background-color: #212529 !important;
+    color: white !important;
+}
+
+.form-control{
+    background-color: #2b2b2b;
+    color: white;
+    border: 1px solid #444;
+}
+
+.form-control::placeholder{
+    color: #bbb;
+}
+
+.form-control:focus{
+    background-color: #2b2b2b;
+    color: white;
+    border-color: #0d6efd;
+    box-shadow: none;
+}
+
+.alert{
+    background-color: #2b2b2b;
+    color: white;
+    border: none;
+}
+
+img{
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+img:hover{
+    transform: scale(1.08);
+    transition: 0.3s;
+}
+
+.search-box{
+    max-width: 350px;
+}
+
+a:hover{
+    opacity: 0.8;
+}
+
+html, body{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    flex: 1;
+}
+
+.footer{
+    background-color: #1f1f1f;
+    color: #aaa;
+    text-align: center;
+    padding: 12px;
+    border-top: 1px solid #333;
+}

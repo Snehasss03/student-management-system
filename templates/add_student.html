@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-4 shadow">
+
+<h2>Add Student</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+<input
+type="text"
+name="name"
+class="form-control mb-3"
+placeholder="Student Name"
+>
+
+<input
+type="text"
+name="course"
+class="form-control mb-3"
+placeholder="Course"
+>
+
+<input
+type="email"
+name="email"
+class="form-control mb-3"
+placeholder="Email"
+>
+
+<input
+type="text"
+name="mobile"
+class="form-control mb-3"
+placeholder="Mobile Number"
+>
+
+<input
+type="file"
+name="photo"
+class="form-control mb-3"
+>
+
+<button class="btn btn-success">
+Add Student
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

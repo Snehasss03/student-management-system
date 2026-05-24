@@ -90,6 +90,12 @@ python app.py
 
 ---
 
+### Add Student Page
+
+![Add Student](screenshots/add-student.png)
+
+---
+
 ### Dashboard1
 
 ![Dashboard](screenshots/dashboard1.png)
@@ -102,11 +108,7 @@ python app.py
 
 ---
 
-### Add Student Page
 
-![Add Student](screenshots/add-student.png)
-
----
 
 ## Author
 

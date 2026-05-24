@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from datetime import datetime
 import os
 
 app = Flask(__name__)
@@ -20,22 +21,35 @@ login_manager.login_view = 'login'
 
 # USER MODEL
 class User(UserMixin, db.Model):
+
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(200))
+
+    username = db.Column(
+        db.String(100),
+        unique=True,
+        nullable=False
+    )
+
+    password = db.Column(
+        db.String(200),
+        nullable=False
+    )
 
 
 # STUDENT MODEL
-from datetime import datetime
-
-
 class Student(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    course = db.Column(db.String(100), nullable=False)
+    course = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
     email = db.Column(
         db.String(100),
@@ -58,11 +72,16 @@ class Student(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
+
     return User.query.get(int(user_id))
 
+
+# HOME
 @app.route('/')
 def home():
+
     return redirect('/login')
+
 
 # REGISTER
 @app.route('/register', methods=['GET', 'POST'])
@@ -71,9 +90,29 @@ def register():
     if request.method == 'POST':
 
         username = request.form['username']
-        password = generate_password_hash(request.form['password'])
 
-        user = User(username=username, password=password)
+        password = generate_password_hash(
+            request.form['password']
+        )
+
+        # CHECK EXISTING USER
+
+        existing_user = User.query.filter_by(
+            username=username
+        ).first()
+
+        if existing_user:
+
+            flash('Username already exists')
+
+            return redirect('/register')
+
+        # CREATE NEW USER
+
+        user = User(
+            username=username,
+            password=password
+        )
 
         db.session.add(user)
         db.session.commit()
@@ -92,11 +131,17 @@ def login():
     if request.method == 'POST':
 
         username = request.form['username']
+
         password = request.form['password']
 
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(
+            username=username
+        ).first()
 
-        if user and check_password_hash(user.password, password):
+        if user and check_password_hash(
+            user.password,
+            password
+        ):
 
             login_user(user)
 
@@ -129,10 +174,15 @@ def dashboard():
     search = request.args.get('search')
 
     if search:
+
         students = Student.query.filter(
-            Student.name.contains(search)
+            (Student.name.contains(search)) |
+            (Student.course.contains(search)) |
+            (Student.email.contains(search))
         ).all()
+
     else:
+
         students = Student.query.all()
 
     return render_template(
@@ -181,13 +231,17 @@ def add_student():
 
             return redirect('/add')
 
+        # PHOTO
+
         photo = request.files['photo']
 
         filename = 'default.png'
 
         if photo and photo.filename != '':
 
-            filename = secure_filename(photo.filename)
+            filename = secure_filename(
+                photo.filename
+            )
 
             photo.save(
                 os.path.join(
@@ -195,6 +249,8 @@ def add_student():
                     filename
                 )
             )
+
+        # CREATE STUDENT
 
         student = Student(
             name=name,
@@ -212,6 +268,7 @@ def add_student():
         return redirect('/dashboard')
 
     return render_template('add_student.html')
+
 
 # EDIT STUDENT
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -238,6 +295,7 @@ def edit_student(id):
         student=student
     )
 
+
 # DELETE STUDENT
 @app.route('/delete/<int:id>')
 @login_required
@@ -246,6 +304,7 @@ def delete_student(id):
     student = Student.query.get(id)
 
     db.session.delete(student)
+
     db.session.commit()
 
     flash('Student Deleted')
@@ -256,6 +315,7 @@ def delete_student(id):
 if __name__ == '__main__':
 
     with app.app_context():
+
         db.create_all()
 
     app.run(debug=True)

@@ -76,7 +76,35 @@ python app.py
 
 ## Project Screenshots
 
-(Add screenshots here later)
+## Project Screenshots
+
+### Login Page
+
+![Login Page](screenshots/login.png)
+
+---
+
+### Register Page
+
+![Register Page](screenshots/register.png)
+
+---
+
+### Dashboard1
+
+![Dashboard](screenshots/dashboard1.png)
+
+---
+
+### Dashboard2
+
+![Dashboard](screenshots/dashboard2.png)
+
+---
+
+### Add Student Page
+
+![Add Student](screenshots/add-student.png)
 
 ---
 
